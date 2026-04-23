@@ -1,0 +1,86 @@
+services:
+  # Feature 04: Database
+  db:
+    image: postgres:16-alpine
+    container_name: teamboard-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password123}
+      POSTGRES_DB: teamboard_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+
+  # Feature 03: Backend
+  backend:
+    build: ./backend
+    container_name: teamboard-backend
+    restart: on-failure
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-admin}:${DB_PASSWORD:-password123}@db:5432/teamboard_db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    networks:
+      - backend-network
+      - frontend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Feature 02: Frontend
+  frontend:
+    build: ./frontend
+    container_name: teamboard-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - frontend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+
+  # Feature 05: Portainer
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: teamboard-portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/var/data
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  portainer_data:
