@@ -14,6 +14,6 @@ USER appuser
 
 EXPOSE 5000
 
-
+HEALTHCHECK CMD curl --fail http://localhost:5000/api/health || exit 1
 
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
