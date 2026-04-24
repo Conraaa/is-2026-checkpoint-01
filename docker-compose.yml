@@ -1,23 +1,6 @@
 services:
   # Feature 04: Database
-  db:
-    image: postgres:16-alpine
-    container_name: teamboard-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${DB_USER:-admin}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-password123}
-      POSTGRES_DB: teamboard_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - backend-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 128M
+
 
   # Feature 03: Backend
   backend:
@@ -39,11 +22,6 @@ services:
         limits:
           cpus: '0.50'
           memory: 256M
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   # Feature 02: Frontend
   frontend:
@@ -61,19 +39,7 @@ services:
           memory: 128M
 
   # Feature 05: Portainer
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: teamboard-portainer
-    restart: always
-    ports:
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/var/data
-    deploy:
-      resources:
-        limits:
-          memory: 256M
+
 
 networks:
   frontend-network:
@@ -82,5 +48,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
-  portainer_data:
+  
