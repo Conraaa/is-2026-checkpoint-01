@@ -1,0 +1,51 @@
+services:
+  # Feature 04: Database
+
+
+  # Feature 03: Backend
+  backend:
+    build: ./backend
+    container_name: teamboard-backend
+    restart: on-failure
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-admin}:${DB_PASSWORD:-password123}@db:5432/teamboard_db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    networks:
+      - backend-network
+      - frontend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  # Feature 02: Frontend
+  frontend:
+    build: ./frontend
+    container_name: teamboard-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - frontend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+
+  # Feature 05: Portainer
+
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+
+volumes:
+  
