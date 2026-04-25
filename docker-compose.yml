@@ -1,6 +1,20 @@
 services:
   # Feature 04: Database
-
+  db:
+    image: postgres:16-alpine
+    container_name: teamboard-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password123}
+      POSTGRES_DB: ${DB_NAME:-teamboard_db}
+    networks:
+      - backend-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
 
   # Feature 03: Backend
   backend:
@@ -48,4 +62,3 @@ networks:
     driver: bridge
 
 volumes:
-  
