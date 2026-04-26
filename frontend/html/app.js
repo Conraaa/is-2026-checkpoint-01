@@ -8,7 +8,7 @@ async function fetchTeam() {
         tableBody.innerHTML = ''; // Limpia la tabla
         data.forEach(member => {
             tableBody.innerHTML += `<tr>
-                <td>${member.nombre}</td>
+                <td>${member.nombre} ${member.apellido}</td>
                 <td>${member.legajo}</td>
                 <td>${member.feature}</td>
                 <td>${member.servicio}</td>
