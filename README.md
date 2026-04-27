@@ -40,7 +40,7 @@ Sigue estos pasos para ejecutar la aplicación en tu entorno local:
 ### 2. Instalación y Despliegue
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://github.com/](https://github.com/)[tu-usuario]/is-2026-checkpoint-01.git
+    git clone https://github.com/Conraaa/is-2026-checkpoint-01.git
     cd is-2026-checkpoint-01
     ```
 
@@ -68,7 +68,46 @@ Sigue estos pasos para ejecutar la aplicación en tu entorno local:
 ---
 
 ## Monitoreo de Contenedores (Portainer)
+Portainer es una interfaz web que permite ver y administrar todos los 
+contenedores Docker del proyecto desde el navegador, sin necesidad de 
+usar la terminal.
 
+### Acceso
+
+Una vez levantado el proyecto, abrí el navegador y entrá a:
+
+http://localhost:9000
+
+### Primera vez
+
+La primera vez que accedés, Portainer pide que crees un usuario 
+administrador. Completá un nombre de usuario y una contraseña y hacé clic en "Create user".
+
+### ¿Qué muestra?
+
+Desde el panel podés ver:
+- El estado de cada contenedor (running, stopped, etc.)
+- Los logs de cada servicio
+- El uso de CPU y memoria de cada contenedor
+- Los volúmenes y redes del proyecto
+
+### Capturas de pantalla
+
+---
+
+<img width="1913" height="608" alt="Captura de pantalla 2026-04-27 135606" src="https://github.com/user-attachments/assets/10dcfa35-194c-4c27-8864-cf7eb1ee161d" />
+
+---
+
+<img width="1910" height="904" alt="Captura de pantalla 2026-04-27 135618" src="https://github.com/user-attachments/assets/c62e3798-985f-46f2-8012-4b647eebd04d" />
+
+---
+
+<img width="1919" height="604" alt="Captura de pantalla 2026-04-27 135633" src="https://github.com/user-attachments/assets/484c081c-1b09-47b7-b9b8-b8ebfcce9ac1" />
+
+---
+
+<img width="1827" height="445" alt="image" src="https://github.com/user-attachments/assets/19e32bc1-637a-44a2-baf7-00ec098cb296" />
 
 ---
 *Este proyecto fue desarrollado para la cátedra de Ingeniería y Calidad de Software (IS-2026).*
